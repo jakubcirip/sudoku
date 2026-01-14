@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "board.h"
 
 void board_init(struct sudoku *s){
