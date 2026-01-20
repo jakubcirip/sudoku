@@ -1,10 +1,76 @@
 #include "game.h"
 
-void game_init(struct sudoku *s){}
+void game_init(struct sudoku *s){
+    board_clear(s);
+    board_set(s, 0, 3, '7');
+    board_set(s, 0, 4, '9');
+    board_set(s, 0, 7, '5');
+    board_set(s, 1, 0, '3');
+    board_set(s, 1, 1, '5');
+    board_set(s, 1, 2, '2');
+    board_set(s, 1, 5, '8');
+    board_set(s, 1, 7, '4');
+    board_set(s, 2, 7, '8');
+    board_set(s, 3, 1, '1');
+    board_set(s, 3, 4, '7');
+    board_set(s, 3, 8, '4');
+    board_set(s, 4, 0, '6');
+    board_set(s, 4, 3, '3');
+    board_set(s, 4, 5, '1');
+    board_set(s, 4, 8, '8');
+    board_set(s, 5, 0, '9');
+    board_set(s, 5, 4, '8');
+    board_set(s, 5, 7, '1');
+    board_set(s, 6, 1, '2');
+    board_set(s, 7, 1, '4');
+    board_set(s, 7, 3, '5');
+    board_set(s, 7, 6, '8');
+    board_set(s, 7, 7, '9');
+    board_set(s, 7, 8, '1');
+    board_set(s, 8, 1, '8');
+    board_set(s, 8, 4, '3');
+    board_set(s, 8, 5, '7');
 
-void game_loop(struct sudoku *s){}
+    board_copy_initial(s);
+    render_message("Hello player!\n");
+    render_board(s);
+}
 
-bool game_input(int *row, int *col, char *value){}
+void game_loop(struct sudoku *s){
+    int row=0, col=0;
+    char value;
+    while(true){
+        render_board(s);
+        render_message("To end game enter '0'");
+        render_message("Make a move\n, Enter: row_number col_number and value to insert\n");
+        render_message("For example: 3 8 5");
+        game_input(row, col, value);
+        if(game_is_initial(s, row, col)){
+            render_message("This number cannot be changed!\n");
+            continue;
+        }
+        if(validate_move(s, row, col, value)){
+            render_message("Invalid move\n");
+            continue;
+        }
+        if(!game_input(row, col, value)){   
+            render_message("Game ended by player!");
+            break;
+        } else 
+            game_apply_move(s, row, col, value);
+
+        if(game_is_finished(s)){
+            render_board(s);
+            render_message("Congratulations! You have solved the sudoku\n");
+            break;
+        }
+
+    }
+}
+
+bool game_input(int *row, int *col, char *value){
+    
+}
 
 bool game_is_initial(const struct sudoku *s, int row, int col){
 
