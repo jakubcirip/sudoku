@@ -41,9 +41,7 @@ void game_loop(struct sudoku *s){
     char value;
     while(true){
         render_board(s);
-        render_message("To end game enter '0'");
-        render_message("Make a move\n, Enter: row_number col_number and value to insert\n");
-        render_message("For example: 3 8 5");
+        render_message("To end game enter 'q' or '0'\n");
         game_input(row, col, value);
         if(game_is_initial(s, row, col)){
             render_message("This number cannot be changed!\n");
@@ -69,7 +67,55 @@ void game_loop(struct sudoku *s){
 }
 
 bool game_input(int *row, int *col, char *value){
-    
+    char buffer[100];
+    int user_row=0, user_col=0;
+    char user_value;
+    while(true){
+        render_message("Make a move,\n Enter: <row_number> <col_number> <value> to insert\n");
+        render_message("For example: 3 8 5\n");
+        if((fgets(buffer, sizeof(buffer), stdin)) == NULL){
+            printf("Ending game...\n");
+            return false;
+        }
+        if(buffer[0] == 'q' || buffer[0] == 'Q'){
+                printf("Ending game...\n");
+                printf("Game over\n");
+                return false;
+            }
+        int parsed = sscanf(buffer, " %d %d %c", &user_row, &user_col, &user_value);
+        if(parsed != 3){
+            printf("Wrong input\n");
+            printf("Try again...\n");
+            continue;
+        }
+        if(parsed == 3){
+            if(user_row == 0){
+                printf("Ending game...\n");
+                printf("Game over\n");
+                return false;
+            }
+        }
+        if(user_row < 1 || user_row > 9){
+            printf("Wrong number of row [1-9]\n");
+            printf("Try again...\n");
+            continue;
+        }
+        if(user_col < 1 || user_col > 9){
+            printf("Wrong number of column [1-9]\n");
+            printf("Try again...\n");
+            continue;
+        }
+        if(user_value < '1' || user_value > '9'){
+            printf("Wrong value [1-9]\n");
+            printf("Try again...\n");
+            continue;
+        }
+        printf("You entered: Row=%d, Column=%d and Value to insert=%c\n",user_row, user_col, user_value);
+        *row=user_row-1;
+        *col=user_col-1;
+        *value=user_value;
+        return true;
+    }
 }
 
 bool game_is_initial(const struct sudoku *s, int row, int col){

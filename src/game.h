@@ -4,6 +4,7 @@
 #include "board.h"
 #include "validation.h"
 #include "render.h"
+#include <stdio.h>
 
 // Game initialization
 void game_init(struct sudoku *s);
