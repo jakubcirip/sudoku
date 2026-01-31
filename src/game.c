@@ -41,7 +41,7 @@ void game_loop(struct sudoku *s){
     char value;
     while(true){
         render_board(s);
-        render_message("To end game enter 'q' or '0'\n");
+        render_message("To end game enter 'q'\n");
         game_input(row, col, value);
         if(game_is_initial(s, row, col)){
             render_message("This number cannot be changed!\n");
@@ -88,13 +88,6 @@ bool game_input(int *row, int *col, char *value){
             printf("Try again...\n");
             continue;
         }
-        if(parsed == 3){
-            if(user_row == 0){
-                printf("Ending game...\n");
-                printf("Game over\n");
-                return false;
-            }
-        }
         if(user_row < 1 || user_row > 9){
             printf("Wrong number of row [1-9]\n");
             printf("Try again...\n");
@@ -119,11 +112,19 @@ bool game_input(int *row, int *col, char *value){
 }
 
 bool game_is_initial(const struct sudoku *s, int row, int col){
-
+    if(s->initial[row][col])
+        return true;
+    else
+        return false;
 }
 
 void game_apply_move(struct sudoku *s, int row, int col, char value){
-
+    board_set(s, row, col, value);
 }
 
-bool game_is_finished(const struct sudoku *s){}
+bool game_is_finished(const struct sudoku *s){
+    if(board_is_full(s) && validate_board(s))
+        return true;
+    else
+        return false;
+}

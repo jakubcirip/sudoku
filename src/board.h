@@ -8,7 +8,7 @@
 
 // Sudoku struct
 struct sudoku {
-    char initial[SIZE][SIZE];
+    bool initial[SIZE][SIZE];
     char board[SIZE][SIZE];
 };
 
