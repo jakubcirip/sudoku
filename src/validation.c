@@ -1,6 +1,7 @@
 #include "validation.h"
 
-bool validate_row(const struct sudoku *s, int row){
+// Row validation
+bool validate_row(const Sudoku *s, int row){
     int seen[10] = {0};
     for(int i=0; i<SIZE; i++){
         char c = board_get(s, row, i);
@@ -17,7 +18,7 @@ bool validate_row(const struct sudoku *s, int row){
 }
 
 // Column validation
-bool validate_col(const struct sudoku *s, int col){
+bool validate_col(const Sudoku *s, int col){
     int seen[10] = {0};
     for(int i=0; i<SIZE; i++){
         char c = board_get(s, i, col);
@@ -34,7 +35,7 @@ bool validate_col(const struct sudoku *s, int col){
 }
 
 // 3x3 blocks validation
-bool validate_block(const struct sudoku *s, int block_row, int block_col){
+bool validate_block(const Sudoku *s, int block_row, int block_col){
     int start_row = block_row * 3;
     int start_col = block_col * 3;
     int seen[10] = {0};
@@ -55,7 +56,7 @@ bool validate_block(const struct sudoku *s, int block_row, int block_col){
 }
 
 // full board validation
-bool validate_board(const struct sudoku *s){
+bool validate_board(const Sudoku *s){
     for(int i=0; i<SIZE; i++){
         if(!validate_row(s, i))
             return false;
@@ -74,14 +75,14 @@ bool validate_board(const struct sudoku *s){
 }
 
 // player next move validation
-bool validate_move(const struct sudoku *s, int row, int col, char value){
+bool validate_move(const Sudoku *s, int row, int col, char value){
     if(value < '1' || value > '9')
         return false;
-    if(row < 0 || row >= SIZE || col < 0 || col >= SIZE)
+    if(row < 1 || row > SIZE || col < 1 || col > SIZE)
         return false;
-    char old = board_get(s, row, col);
-    board_set(s, row, col, value);
+    // char old = board_get(s, row, col);
+    // board_set(s, row, col, value);
     bool ok = validate_row(s, row) && validate_col(s, col) && validate_block(s, row/3, col/3);
-    board_set(s, row, col, old);
+    // board_set(s, row, col, old);
     return  ok;
 }

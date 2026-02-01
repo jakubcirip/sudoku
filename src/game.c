@@ -1,6 +1,6 @@
 #include "game.h"
 
-void game_init(struct sudoku *s){
+void game_init(Sudoku *s){
     board_clear(s);
     board_set(s, 0, 3, '7');
     board_set(s, 0, 4, '9');
@@ -33,36 +33,39 @@ void game_init(struct sudoku *s){
 
     board_copy_initial(s);
     render_message("Hello player!\n");
-    render_board(s);
+    // render_board(s);
 }
 
-void game_loop(struct sudoku *s){
+void game_loop(Sudoku *s){
     int row=0, col=0;
     char value;
+    render_message("To end game enter 'q'.\n");
+    render_board(s);
+
     while(true){
-        render_board(s);
-        render_message("To end game enter 'q'\n");
-        game_input(row, col, value);
-        if(game_is_initial(s, row, col)){
-            render_message("This number cannot be changed!\n");
-            continue;
+        if(game_is_finished(s)){
+            printf("\n\n");
+            render_board(s);
+            render_message("Congratulations! You have solved the sudoku.\n");
+            break;
         }
-        if(validate_move(s, row, col, value)){
-            render_message("Invalid move\n");
-            continue;
-        }
-        if(!game_input(row, col, value)){   
+        if(!game_input(&row, &col, &value)){   
             render_message("Game ended by player!");
             break;
-        } else 
-            game_apply_move(s, row, col, value);
-
-        if(game_is_finished(s)){
-            render_board(s);
-            render_message("Congratulations! You have solved the sudoku\n");
-            break;
-        }
-
+        } else { 
+		if(game_is_initial(s, row, col)){
+			render_message("This number cannot be changed!\n");
+			render_board(s);
+        		continue;
+        	}
+        	if(validate_move(s, row, col, value)){
+            		render_message("Invalid move!\n");
+			render_board(s);
+            		continue;
+        	}
+            	game_apply_move(s, row, col, value);
+	    	render_board(s);
+	}
     }
 }
 
@@ -71,8 +74,8 @@ bool game_input(int *row, int *col, char *value){
     int user_row=0, user_col=0;
     char user_value;
     while(true){
-        render_message("Make a move,\n Enter: <row_number> <col_number> <value> to insert\n");
-        render_message("For example: 3 8 5\n");
+        render_message("Make a move,\n Enter: <row_number> <col_number> <value> to insert.");
+        render_message("For example: '3' '8' '5'");
         if((fgets(buffer, sizeof(buffer), stdin)) == NULL){
             printf("Ending game...\n");
             return false;
@@ -84,22 +87,22 @@ bool game_input(int *row, int *col, char *value){
             }
         int parsed = sscanf(buffer, " %d %d %c", &user_row, &user_col, &user_value);
         if(parsed != 3){
-            printf("Wrong input\n");
+            printf("Wrong input!\n");
             printf("Try again...\n");
             continue;
         }
         if(user_row < 1 || user_row > 9){
-            printf("Wrong number of row [1-9]\n");
+            printf("Wrong number of row [1-9].\n");
             printf("Try again...\n");
             continue;
         }
         if(user_col < 1 || user_col > 9){
-            printf("Wrong number of column [1-9]\n");
+            printf("Wrong number of column [1-9].\n");
             printf("Try again...\n");
             continue;
         }
         if(user_value < '1' || user_value > '9'){
-            printf("Wrong value [1-9]\n");
+            printf("Wrong value [1-9].\n");
             printf("Try again...\n");
             continue;
         }
@@ -111,18 +114,15 @@ bool game_input(int *row, int *col, char *value){
     }
 }
 
-bool game_is_initial(const struct sudoku *s, int row, int col){
-    if(s->initial[row][col])
-        return true;
-    else
-        return false;
+bool game_is_initial(const Sudoku *s, int row, int col){
+    return s->initial[row][col];
 }
 
-void game_apply_move(struct sudoku *s, int row, int col, char value){
+void game_apply_move(Sudoku *s, int row, int col, char value){
     board_set(s, row, col, value);
 }
 
-bool game_is_finished(const struct sudoku *s){
+bool game_is_finished(const Sudoku *s){
     if(board_is_full(s) && validate_board(s))
         return true;
     else

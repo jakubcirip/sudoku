@@ -1,11 +1,13 @@
+#include <stdlib.h>
 #include "game.h"
 #include "board.h"
 #include "render.h"
 
-typedef struct {
+/*typedef struct {
     char board[9][9];
     bool initial[9][9];
 } Sudoku;
+*/
 
 int main(){
     Sudoku *ptr = malloc(sizeof(Sudoku));

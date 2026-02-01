@@ -7,20 +7,20 @@
 #define SIZE 9
 
 // Sudoku struct
-struct sudoku {
+typedef struct {
     bool initial[SIZE][SIZE];
     char board[SIZE][SIZE];
-};
+} Sudoku;
 
 // Initialization of game board
-void board_init(struct sudoku *s);
-void board_clear(struct sudoku *s);
-void board_copy_initial(struct sudoku *s);
+void board_init(Sudoku *s);
+void board_clear(Sudoku *s);
+void board_copy_initial(Sudoku *s);
 
-bool board_is_cell_free(const struct sudoku *s, int row, int col);
-bool board_is_full(const struct sudoku *s);
+bool board_is_cell_free(const Sudoku *s, int row, int col);
+bool board_is_full(const Sudoku *s);
 
-char board_get(const struct sudoku *s, int row, int col);
-void board_set(struct sudoku *s, int row, int col, char value);
+char board_get(const Sudoku *s, int row, int col);
+void board_set(Sudoku *s, int row, int col, char value);
 
 #endif
