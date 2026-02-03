@@ -80,9 +80,6 @@ bool validate_move(const Sudoku *s, int row, int col, char value){
         return false;
     if(row < 1 || row > SIZE || col < 1 || col > SIZE)
         return false;
-    // char old = board_get(s, row, col);
-    // board_set(s, row, col, value);
     bool ok = validate_row(s, row) && validate_col(s, col) && validate_block(s, row/3, col/3);
-    // board_set(s, row, col, old);
     return  ok;
 }
