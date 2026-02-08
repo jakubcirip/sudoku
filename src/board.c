@@ -12,7 +12,7 @@ void board_init(Sudoku *s){
 void board_clear(Sudoku *s){
     for(int i=0; i<SIZE; i++){
         for(int j=0; j<SIZE; j++){
-            s->board[i][j] = '0';
+            s->board[i][j] = '.';
             s->initial[i][j] = false;
         }
     }
@@ -22,7 +22,7 @@ void board_copy_initial(Sudoku *s){
     for(int i=0; i<SIZE; i++){
         for(int j=0; j<SIZE; j++){
 	    char v = s->board[i][j];
-	    if( v != '0' && v != '.' && v != 0)
+	    if(v != '.')
 		s->initial[i][j] = true;
 	    else
 		s->initial[i][j] = false;
@@ -42,9 +42,8 @@ bool board_is_cell_free(const Sudoku *s, int row, int col){
 bool board_is_full(const Sudoku *s){
     for(int i=0; i<SIZE; i++){
         for(int j=0; j<SIZE; j++){
-            if(s->board[i][j] == ' '){
+            if(s->board[i][j] == '.')
                 return false;
-            }
         }
     }
     return true;
