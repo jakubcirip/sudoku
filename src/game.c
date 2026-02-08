@@ -2,34 +2,96 @@
 
 void game_init(Sudoku *s){
     board_clear(s);
+    board_set(s, 0, 0, '8');
+    board_set(s, 0, 1, '6');
+    board_set(s, 0, 2, '1');
     board_set(s, 0, 3, '7');
     board_set(s, 0, 4, '9');
+    board_set(s, 0, 5, '4');
+    board_set(s, 0, 6, '3');
     board_set(s, 0, 7, '5');
+    board_set(s, 0, 8, '2');
+
     board_set(s, 1, 0, '3');
     board_set(s, 1, 1, '5');
     board_set(s, 1, 2, '2');
+    board_set(s, 1, 3, '1');
+    board_set(s, 1, 4, '6');
     board_set(s, 1, 5, '8');
+    board_set(s, 1, 6, '7');
     board_set(s, 1, 7, '4');
+    board_set(s, 1, 8, '9');
+
+    board_set(s, 2, 0, '4');
+    board_set(s, 2, 1, '9');
+    board_set(s, 2, 2, '7');
+    board_set(s, 2, 3, '2');
+    board_set(s, 2, 4, '5');
+    board_set(s, 2, 5, '3');
+    board_set(s, 2, 6, '1');
     board_set(s, 2, 7, '8');
+    board_set(s, 2, 8, '6');
+
+    board_set(s, 3, 0, '2');
     board_set(s, 3, 1, '1');
+    board_set(s, 3, 2, '8');
+    board_set(s, 3, 3, '9');
     board_set(s, 3, 4, '7');
+    board_set(s, 3, 5, '5');
+    board_set(s, 3, 6, '6');
+    board_set(s, 3, 7, '3');
     board_set(s, 3, 8, '4');
+
     board_set(s, 4, 0, '6');
+    board_set(s, 4, 1, '7');
+    board_set(s, 4, 2, '5');
     board_set(s, 4, 3, '3');
+    board_set(s, 4, 4, '4');
     board_set(s, 4, 5, '1');
+    board_set(s, 4, 6, '9');
+    board_set(s, 4, 7, '2');
     board_set(s, 4, 8, '8');
+
     board_set(s, 5, 0, '9');
+    board_set(s, 5, 1, '3');
+    board_set(s, 5, 2, '4');
+    board_set(s, 5, 3, '6');
     board_set(s, 5, 4, '8');
+    board_set(s, 5, 5, '2');
+    board_set(s, 5, 6, '5');
     board_set(s, 5, 7, '1');
+    board_set(s, 5, 8, '7');
+
+    board_set(s, 6, 0, '5');
     board_set(s, 6, 1, '2');
+    board_set(s, 6, 2, '6');
+    board_set(s, 6, 3, '8');
+    board_set(s, 6, 4, '1');
+    board_set(s, 6, 5, '9');
+    board_set(s, 6, 6, '4');
+    board_set(s, 6, 7, '7');
+    board_set(s, 6, 8, '3');
+
+    board_set(s, 7, 0, '7');
     board_set(s, 7, 1, '4');
+    board_set(s, 7, 2, '3');
     board_set(s, 7, 3, '5');
+    board_set(s, 7, 4, '2');
+    board_set(s, 7, 5, '6');
     board_set(s, 7, 6, '8');
     board_set(s, 7, 7, '9');
     board_set(s, 7, 8, '1');
+
+    board_set(s, 8, 0, '1');
     board_set(s, 8, 1, '8');
+    board_set(s, 8, 2, '9');
+    board_set(s, 8, 3, '4');
     board_set(s, 8, 4, '3');
     board_set(s, 8, 5, '7');
+    board_set(s, 8, 6, '2');
+    // board_set(s, 8, 7, '6');
+    // board_set(s, 8, 8, '5');
+
 
     board_copy_initial(s);
     render_message("Hello player!\n");
